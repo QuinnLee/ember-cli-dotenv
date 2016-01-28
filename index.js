@@ -4,6 +4,10 @@
 module.exports = {
   name: 'ember-cli-dotenv',
   config: function(environment){
+    var app = this.app;
+    if (!this.app) {
+      return;
+    }
     var path = require('path');
     var fs = require('fs');
     var dotenv = require('dotenv');
@@ -14,7 +18,7 @@ module.exports = {
     var hasOwn = Object.prototype.hasOwnProperty;
 
     var configFilePath,
-        dotEnvPath = this.app && this.app.options.dotEnv && this.app.options.dotEnv.path;
+        dotEnvPath = app && app.options.dotEnv && app.options.dotEnv.path;
 
     if (dotEnvPath) {
       // path is defined
@@ -37,10 +41,6 @@ module.exports = {
       loadedConfig = {};
     }
 
-    var app = this.app;
-    if (!this.app) {
-      return;
-    }
     if (app.options.dotEnv && hasOwn.call(app.options.dotEnv, 'allow')){
       console.warn("[EMBER-CLI-DOTENV] app.options.allow has been deprecated. Please use clientAllowedKeys instead. Support will be removed in the next major version");
     }
